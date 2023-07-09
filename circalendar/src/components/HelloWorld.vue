@@ -57,8 +57,10 @@
         </span>
       </div>
       <h2 class="text-center">Upcoming Events</h2>
-      <EventSlider />
+      
     </v-responsive>
+        <EventSlider />
+
   </v-container>
 </template>
 

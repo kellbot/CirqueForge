@@ -6,13 +6,13 @@
 
       CirquePlexForge
     </v-app-bar-title>
-    <v-btn href="/events">Events</v-btn>
+    <v-btn href="">Events</v-btn>
     <v-btn>About Us</v-btn>
-    <v-btn href="/profile/add">
+    <v-btn href="">
            Log In / Register
         </v-btn>
     <v-spacer></v-spacer>
-        <v-btn href="/profile" icon>
+        <v-btn href="" icon>
           <v-icon>mdi-magnify</v-icon>
         </v-btn>
 

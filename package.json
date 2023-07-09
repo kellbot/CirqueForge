@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@vue/cli": "^5.0.8",
+    "@vuejs-community/vue-filter-date-format": "^1.7.1"
+  }
+}

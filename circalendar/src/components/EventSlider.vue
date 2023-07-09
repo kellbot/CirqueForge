@@ -3,7 +3,7 @@
     <v-slide-group multiple show-arrows>
       <v-slide-group-item v-for="n in upcomingEvents" :key="n" v-slot="{ isSelected, toggle, selectedClass }">
         <v-hover v-slot="{ isHovering, props }">
-          <v-card color="white" :class="['ma-4', selectedClass, 'text-left']" v-bind="props" width="250">
+          <v-card elevation="3" color="white" :class="['ma-4', selectedClass, 'text-left']" v-bind="props" width="250">
             <v-img height="200" :src="n.img" cover class="text-white">
 
               <div v-if="isHovering"

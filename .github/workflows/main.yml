@@ -37,10 +37,8 @@ jobs:
           cache: 'npm'
       - name: Install dependencies
         run: npm install
-        working-directory: circalendar
       - name: Build
         run: npm run build
-        working-directory: circalendar
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Upload artifact

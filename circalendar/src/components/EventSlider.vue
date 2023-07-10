@@ -14,6 +14,7 @@
   <br /><a
     href="https://www.freepik.com/free-photo/leg-stretching-with-red-linen_8909234.htm#query=aerial%20silks%20people&position=7&from_view=search&track=ais">Image
     by Racool_studio</a> on Freepik
+    <a href="https://www.freepik.com/free-vector/group-friends-sitting-table-talking-drinking-coffee-tea-tiny-people-friends-meeting-cheer-up-friend-friendship-support-concept_10782457.htm#query=meeting%20club&position=3&from_view=search&track=ais">Image by vectorjuice</a> on Freepik
 </template>
 <style>
 .v-card--reveal {
@@ -33,29 +34,21 @@
 <script>
 import hands from '@/assets/woman-doing-sport-exercises.jpg';
 import aerial from '@/assets/leg-stretching-with-red-linen.jpg';
+import meeting from '@/assets/19198014.jpg';
 
 
 import { useAppStore } from '@/store/app';
 import { storeToRefs } from 'pinia'
 const { user } = storeToRefs(useAppStore());
-import dummyEvents from '@/assets/calendar.json';
-
 import EventCard from '@/components/EventCard.vue';
 
 const appScriptUrl = 'https://script.google.com/macros/s/AKfycbwOSpw-zlGKEQoA8GUmohEdmk1hqszaW6qqG3Pei-E6vOGNnZkBAB-rx66NnS9ywoVcoA/exec?run=ok';
-
-let imgEvents = dummyEvents.map(d => {
-  d.img = d.summary == "Handstand Study Group" ? hands : aerial;
-  return d;
-});
-
 
 export default {
   data() {
     return {
       user: user,
       myEvents: [],
-      upcomingEvents: imgEvents,
       realEvents: '',
     }
   },
@@ -66,7 +59,16 @@ export default {
     fetch(appScriptUrl).then(response => response.json())
     .then(data => {
       this.realEvents = data.map(d => {
-  d.img = d.summary == "Handstand Study Group" ? hands : aerial;
+        switch( d.summary){
+    case "Handstand Study Group":
+      d.img = hands;
+      break;
+    case "Low Aerial Study Group":
+      d.img = aerial;
+      break;
+    case "Test":
+      d.img = meeting
+  }
   return d;
 });
     });  

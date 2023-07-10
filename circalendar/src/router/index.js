@@ -58,8 +58,7 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHistory('/CirqueForge/'),
-//  history: createWebHistory(process.env.BASE_URL),
+ history: createWebHistory(process.env.BASE_URL),
   routes,
 })
 

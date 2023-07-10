@@ -23,7 +23,7 @@ app.use(
       domain: "dev-krqmjv60a1pp30yx.us.auth0.com",
       clientId: "oh8S7aGKo8PAmgcIsrH4TYXmD45a5IhZ",
       authorizationParams: {
-        redirect_uri: window.location.origin + '/CirqueForge/'
+        redirect_uri: window.location.origin 
       }
     })
   );

@@ -28,32 +28,8 @@
       <div class="ma-2 pa-2">
         Our study groups are offered on a "pay what you can" basis with a suggested donation of $5. 
 
-        <span v-if="!user.loggedIn">
-          <v-btn>REGISTER
-
-          <v-dialog v-model="user.registerOpen" activator="parent" width="auto">
-            <v-card>
-              <v-card-text v-if="!registartionSubmitted">
-                After registration click the link in the email to log in.
-                
-                <v-sheet max-width="300" class="mx-auto">
-                  <v-form>
-                    <v-text-field class="bg-grey-lighten-3 text-black" v-model="firstName" label="First name"></v-text-field>
-                    <v-text-field class="bg-grey-lighten-3 text-black" v-model="lastName" label="Last name"></v-text-field>
-                    <v-text-field class="bg-grey-lighten-3 text-black" v-model="emailAddress" label="Email"></v-text-field>
-
-                    <v-btn type="submit" block class="mt-2" text="Submit" @click.prevent="doSubmit"></v-btn>
-                  </v-form>
-                </v-sheet>
-              </v-card-text>
-              <v-card-text v-else>
-                Please check your email for the login link. [<a  href='' @click.prevent="login">Link from email</a>]
-              </v-card-text>
-              <v-card-actions>
-                <v-btn color="primary" block @click="user.registerOpen = false">Close</v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
+        <span v-if="!isAuthenticated">
+          <v-btn @click="login">REGISTER
         </v-btn> to RSVP
         </span>
       </div>
@@ -67,30 +43,23 @@
 
 <script>
 import EventSlider from '@/components/EventSlider.vue'
-import { useAppStore } from '@/store/app';
-import { storeToRefs } from 'pinia'
-const { user } = storeToRefs(useAppStore());
+import { useAuth0 } from '@auth0/auth0-vue';
 
 export default {
-  data() {
-    return {
-      registartionSubmitted: false,
-      user: user,
-      firstName: '',
-      lastName: '',
-      emailAddress: '',
-    }
-  },
-  methods: {
-        doSubmit() {
-          console.log("Some behind-the-scenes submission action...");
-          this.registartionSubmitted = true;
-        },
-        login() {
-          console.log("User logged in");
-          this.user.loggedIn = true;
-        }
-      },
+  setup() {
+        const { loginWithRedirect, logout, user, isAuthenticated } = useAuth0();
+
+        return {
+            login: () => {
+                loginWithRedirect();
+            },
+            logout() {
+                logout()
+            },
+            user,
+            isAuthenticated
+        };
+    },
   components: {
     EventSlider
   }

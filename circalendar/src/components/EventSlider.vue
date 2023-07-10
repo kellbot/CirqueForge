@@ -2,27 +2,9 @@
   <v-sheet class="pa-0 mx-auto" max-width="1100px" color="background">
     <v-slide-group multiple show-arrows>
       <v-slide-group-item v-for="n in upcomingEvents" :key="n" v-slot="{ isSelected, toggle, selectedClass }">
-        <v-hover v-slot="{ isHovering, props }">
-          <v-card elevation="3" color="white" :class="['ma-4', selectedClass, 'text-left']" v-bind="props" width="250">
-            <v-img height="200" :src="n.img" cover class="text-white">
+       
+          <eventCard :logged-in="user.loggedIn" :card-event="n" :is-selected="isSelected" :selected-class="selectedClass" :toggle="toggle"/>
 
-              <div v-if="isHovering"
-                class="d-flex flex-column transition-fast-in-fast-out bg-secondary v-card--reveal text-h2"
-                style="height: 100%;">
-                <v-btn v-if="user.loggedIn" class="w-75 ma-5 bg-white" @click="toggle"><span v-if="isSelected">Cancel</span> RSVP</v-btn>
-                <v-btn class="w-75">More Info</v-btn>
-              </div>
-              <div v-if="isSelected" class="text-center going w-100 bg-success">
-                GOING
-              </div>
-            </v-img>
-            <v-card-title class="pt-2 pb-0">{{ n.summary }}</v-card-title>
-           
-            <v-card-subtitle class="pb-2">{{ new Date(n.start.dateTime).format('l, F j g:i a') }}</v-card-subtitle>
-            
-
-          </v-card>
-        </v-hover>
       </v-slide-group-item>
     </v-slide-group>
   </v-sheet>
@@ -56,6 +38,8 @@ import { storeToRefs } from 'pinia'
 const { user } = storeToRefs(useAppStore());
 import dummyEvents from '@/assets/calendar.json';
 
+import EventCard from '@/components/EventCard.vue';
+
 let imgEvents = dummyEvents.map(d => {
   d.img = d.summary == "Handstand Study Group" ?  hands : aerial;
   return d;
@@ -70,6 +54,9 @@ export default {
       upcomingEvents: imgEvents,
     }
   },
+  components: {
+    EventCard,
+  }
 }
 
 </script>

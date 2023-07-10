@@ -48,7 +48,7 @@ export default {
       logout() {
         auth0.logout({
           logoutParams: {
-            returnTo: window.location.href
+            returnTo: window.location.origin + '/CirqueForge/'
           }
         });
       }

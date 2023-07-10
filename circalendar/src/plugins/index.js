@@ -18,4 +18,5 @@ export function registerPlugins (app) {
     .use(vuetify)
     .use(router)
     .use(pinia)
+  app.config.globalProperties.$fakeUser = {loggedIn: false, dialog: false};
 }

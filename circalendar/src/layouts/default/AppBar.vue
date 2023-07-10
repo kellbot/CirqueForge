@@ -8,10 +8,16 @@
     </v-app-bar-title>
     <v-btn href="">Events</v-btn>
     <v-btn>About Us</v-btn>
-    <v-btn href="">
+    <v-spacer></v-spacer>
+    <v-divider vertical></v-divider>
+    <v-btn v-if="user.loggedIn" href="">
+           {{ user.fullName }}
+        </v-btn>
+    <v-btn v-if="!user.loggedIn" href="" @click="user.registerOpen = true">
            Log In / Register
         </v-btn>
-    <v-spacer></v-spacer>
+        <v-divider vertical></v-divider>
+   
         <v-btn href="" icon>
           <v-icon>mdi-magnify</v-icon>
         </v-btn>
@@ -26,6 +32,17 @@
 </v-system-bar>
 </template>
 
-<script setup>
-  //
+<script>
+import { useAppStore } from '@/store/app';
+import { storeToRefs } from 'pinia'
+const { user } = storeToRefs(useAppStore());
+
+export default {
+data() {
+    return {
+      user: user,
+    }
+  }
+}
+
 </script>

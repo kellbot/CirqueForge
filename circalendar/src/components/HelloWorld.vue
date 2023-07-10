@@ -27,10 +27,11 @@
       <v-divider></v-divider>
       <div class="ma-2 pa-2">
         Our study groups are offered on a "pay what you can" basis with a suggested donation of $5. 
-        <span v-if="!loggedIn">
-          <v-btn>REIGSTER
 
-          <v-dialog v-model="dialog" activator="parent" width="auto">
+        <span v-if="!user.loggedIn">
+          <v-btn>REGISTER
+
+          <v-dialog v-model="user.registerOpen" activator="parent" width="auto">
             <v-card>
               <v-card-text v-if="!registartionSubmitted">
                 After registration click the link in the email to log in.
@@ -49,7 +50,7 @@
                 Please check your email for the login link. [<a  href='' @click.prevent="login">Link from email</a>]
               </v-card-text>
               <v-card-actions>
-                <v-btn color="primary" block @click="dialog = false">Close</v-btn>
+                <v-btn color="primary" block @click="user.registerOpen = false">Close</v-btn>
               </v-card-actions>
             </v-card>
           </v-dialog>
@@ -66,12 +67,15 @@
 
 <script>
 import EventSlider from '@/components/EventSlider.vue'
+import { useAppStore } from '@/store/app';
+import { storeToRefs } from 'pinia'
+const { user } = storeToRefs(useAppStore());
+
 export default {
   data() {
     return {
-      dialog: false,
       registartionSubmitted: false,
-      loggedIn: false,
+      user: user,
       firstName: '',
       lastName: '',
       emailAddress: '',
@@ -83,7 +87,8 @@ export default {
           this.registartionSubmitted = true;
         },
         login() {
-          this.loggedIn = true
+          console.log("User logged in");
+          this.user.loggedIn = true;
         }
       },
   components: {

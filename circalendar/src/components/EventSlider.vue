@@ -9,15 +9,16 @@
               <div v-if="isHovering"
                 class="d-flex flex-column transition-fast-in-fast-out bg-secondary v-card--reveal text-h2"
                 style="height: 100%;">
-                <v-btn class="w-75 ma-5 bg-white" @click="toggle"><span v-if="isSelected">Cancel</span> RSVP</v-btn>
+                <v-btn v-if="user.loggedIn" class="w-75 ma-5 bg-white" @click="toggle"><span v-if="isSelected">Cancel</span> RSVP</v-btn>
                 <v-btn class="w-75">More Info</v-btn>
               </div>
               <div v-if="isSelected" class="text-center going w-100 bg-success">
                 GOING
               </div>
             </v-img>
-            <v-card-title class="pt-2 pb-0">{{ n.title }}</v-card-title>
-            <v-card-subtitle class="pb-2">{{ new Date(n.date).format('l, F j g:i a') }}</v-card-subtitle>
+            <v-card-title class="pt-2 pb-0">{{ n.summary }}</v-card-title>
+           
+            <v-card-subtitle class="pb-2">{{ new Date(n.start.dateTime).format('l, F j g:i a') }}</v-card-subtitle>
             
 
           </v-card>
@@ -46,26 +47,29 @@
 }
 </style>
 <script>
-
 import hands from '@/assets/woman-doing-sport-exercises.jpg';
 import aerial from '@/assets/leg-stretching-with-red-linen.jpg';
+
+
+import { useAppStore } from '@/store/app';
+import { storeToRefs } from 'pinia'
+const { user } = storeToRefs(useAppStore());
+import dummyEvents from '@/assets/calendar.json';
+
+let imgEvents = dummyEvents.map(d => {
+  d.img = d.summary == "Handstand Study Group" ?  hands : aerial;
+  return d;
+});
 
 
 export default {
   data() {
     return {
+      user: user,
       myEvents: [],
-      upcomingEvents: [
-        { title: "Handstand Study Group", img: aerial, date: '2019-07-16 9:00' },
-        { title: "Low Aerial Study Group", img: hands, date: '2019-07-16 9:00' },
-        { title: "Handstand Study Group", img: aerial, date: '2019-07-16 9:00' },
-        { title: "Low Aerial Study Group", img: hands, date: '2019-07-16 9:00' },
-        { title: "Handstand Study Group", img: aerial, date: '2019-07-16 9:00' },
-        { title: "Low Aerial Study Group", img: hands, date: '2019-07-16 9:00' },
-      ]
+      upcomingEvents: imgEvents,
     }
-  }
+  },
 }
-
 
 </script>

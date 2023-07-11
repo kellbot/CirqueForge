@@ -9,14 +9,6 @@
       </v-slide-group-item>
     </v-slide-group>
   </v-sheet>
-  Image by <a
-    href="https://www.freepik.com/free-photo/full-shot-woman-training-yoga-mat_21934968.htm#page=2&query=people%20handstands&position=6&from_view=search&track=ais">Freepik</a>
-  <br /><a
-    href="https://www.freepik.com/free-photo/leg-stretching-with-red-linen_8909234.htm#query=aerial%20silks%20people&position=7&from_view=search&track=ais">Image
-    by Racool_studio</a> on Freepik
-  <a
-    href="https://www.freepik.com/free-vector/group-friends-sitting-table-talking-drinking-coffee-tea-tiny-people-friends-meeting-cheer-up-friend-friendship-support-concept_10782457.htm#query=meeting%20club&position=3&from_view=search&track=ais">Image
-    by vectorjuice</a> on Freepik
 </template>
 <style>
 .v-card--reveal {

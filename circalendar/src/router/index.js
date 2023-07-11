@@ -34,6 +34,11 @@ const routes = [
     ]
   },
   {
+    path: '/login',
+    name: 'Login',
+    component: () => import('@/views/login')
+  },
+  {
     path: '/profile',
     name: 'profile',
     component: () => import('@/layouts/default/Default.vue'),

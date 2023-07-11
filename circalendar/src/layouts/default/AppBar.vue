@@ -10,11 +10,10 @@
     <v-spacer></v-spacer>
     <v-divider vertical></v-divider>
 
-    <v-btn v-if="!isAuthenticated" @click="login">
+    <v-btn v-if="!user" @click="login">
       Log In / Register
     </v-btn>
- 
-    <profile v-if="isAuthenticated" />
+    <!-- <profile v-if="user" /> -->
     <v-divider vertical></v-divider>
     <v-btn href="" icon>
       <v-icon>mdi-magnify</v-icon>
@@ -32,12 +31,15 @@
 
 <script>
 
+import firebase from 'firebase/compat/app';
 import profile from '@/components/profile.vue';
+
 export default {
   name: "NavBar",
    data() {
     return{
-    isAuthenticated: false
+    isAuthenticated: false,
+    user: null
   }
   },
   components: {
@@ -47,7 +49,14 @@ export default {
     login() {
       return false;
     }
-  }
+  },
+  created() {
+       firebase.auth().onAuthStateChanged(user => {
+           if (user) {
+               this.user = user;
+           }
+       });
+   }
 };
 
 </script>

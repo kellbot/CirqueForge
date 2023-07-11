@@ -1,8 +1,8 @@
-<template>
+<template v-if="user">
     <v-menu open-on-hover>
         <template v-slot:activator="{ props }">
-            <v-btn v-bind="props">
-                {{ user.name }}
+            <v-btn  v-bind="props">
+                {{ user.displayName }}
             </v-btn>
         </template>
         <v-list>
@@ -13,23 +13,30 @@
     </v-menu>
 </template>
 <script>
-
+import firebase from 'firebase/compat/app';
 
 export default {
+    methods : {
+        logout(e) {
+        e.stopPropagation();
+        firebase.auth().signOut();
+
+    }
+    },
     setup() {
-        const { loginWithRedirect, logout, user, isAuthenticated } = useAuth0();
+       
 
         return {
-            login: () => {
-                loginWithRedirect();
-            },
-            logout() {
-                logout()
-            },
-            user,
-            isAuthenticated
+            user: null
         };
-    }
+    },
+    created() {
+       firebase.auth().onAuthStateChanged(user => {
+           if (user) {
+               this.user = user;
+           }
+       });
+   }
 };
 </script>
 <style>

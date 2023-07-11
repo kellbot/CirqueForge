@@ -52,31 +52,9 @@ import hands from '@/assets/woman-doing-sport-exercises.jpg';
 import aerial from '@/assets/leg-stretching-with-red-linen.jpg';
 import meeting from '@/assets/19198014.jpg';
 import EventCard from '@/components/EventCard.vue';
-
 import firebase from 'firebase/compat/app';
-import 'firebase/compat/auth';
-import 'firebase/compat/messaging';
-import 'firebase/compat/firestore';
-
-import "firebaseui/dist/firebaseui.css";
 import * as firebaseui from 'firebaseui'
-
 const appScriptUrl = 'https://script.google.com/macros/s/AKfycbwOSpw-zlGKEQoA8GUmohEdmk1hqszaW6qqG3Pei-E6vOGNnZkBAB-rx66NnS9ywoVcoA/exec?run=ok';
-const firebaseConfig = {
-  apiKey: "AIzaSyAgrUB1D6qh-AcSZCgeS5hXToetWc_eS98",
-  authDomain: "public-calendar-sync.firebaseapp.com",
-  projectId: "public-calendar-sync",
-  storageBucket: "public-calendar-sync.appspot.com",
-  messagingSenderId: "316754049831",
-  appId: "1:316754049831:web:efb98205e9b16d10950702",
-  measurementId: "G-8K4ZWCFW40"
-};
-
-// Initialize Firebase
-
-const database = firebase.initializeApp(
-  firebaseConfig
-);
 
 
 export default {

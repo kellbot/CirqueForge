@@ -1,65 +1,66 @@
 <template>
-    <div class="row">
-        <div class="col-md-12">
-            <table class="table table-striped">
-                <thead class="thead-dark">
-                    <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Phone</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="person in People" :key="person._id">
-                        <td>{{ person.name }}</td>
-                        <td>{{ person.email }}</td>
-                        <td>{{ person.phone }}</td>
-                        <td>
-                            <router-link :to="{name: 'edit', params: { id: person._id }}" class="btn btn-success">Edit
-                            </router-link>
-                            <button @click.prevent="deleteStudent(person._id)" class="btn btn-danger">Delete</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</template>
-<script>
-    import axios from "axios";
-    export default {
-        data() {
-            return {
-                People: []
-            }
-        },
-        created() {
-            let apiURL = 'http://localhost:4000/api/person';
-            axios.get(apiURL).then(res => {
-                this.People = res.data;
-            }).catch(error => {
-                console.log(error)
-            });
-        },
-        methods: {
-            deletePerson(id){
-                let apiURL = `http://localhost:4000/api/delete-person/${id}`;
-                let indexOfArrayItem = this.Students.findIndex(i => i._id === id);
-                if (window.confirm("Do you really want to delete?")) {
-                    axios.delete(apiURL).then(() => {
-                        this.People.splice(indexOfArrayItem, 1);
-                    }).catch(error => {
-                        console.log(error)
-                    });
-                }
-            }
-        }
-    }
-</script>
-<style>
-    .btn-success {
-        margin-right: 10px;
-    }
-</style>
+    <section>
+        
+        <ul id="nav-mobile" class="right">
+                <li v-show="!user">
+                    <router-link to="/login">Login</router-link>
+                </li>
+                <li v-show="user">
+                    <router-link to="/profile">Profile</router-link>
+                </li>
+                <li v-show="user">
+                    <a @click="signoutButtonPressed">Logout</a>
+                </li>
+            </ul>
+        <h5 class="center-align">Profile</h5>
 
+        <div class="card horizontal" style="max-width:400px;margin:0 auto;" v-if="user">
+            <div class="card-image" style="margin-top:25px;margin-left:10px;">
+                <img
+                    :src="user.photoURL"
+                    style="width:75px;height:75px;border-radius:50%;border:4px solid #333"
+                />
+            </div>
+            <div class="card-stacked">
+                <div class="card-content">
+                    <p>
+                        name:
+                        <strong>{{user.displayName}}</strong>
+                        <br />email:
+                        <strong>{{user.email}}</strong>
+                        <br />uid:
+                        <strong>{{user.uid}}</strong>
+                        <br />provider:
+                        <strong class="teal-text">{{user.providerData[0].providerId}}</strong>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+</template>
+
+<script>
+import firebase from "firebase/compat/app";
+
+export default {
+    data() {
+        return {
+            user: null
+        };
+    },
+    methods: {
+        signoutButtonPressed(e) {
+            e.stopPropagation();
+            firebase.auth().signOut();
+            this.$router.push({ name: "Login" });
+        }
+    },
+    created() {
+        firebase.auth().onAuthStateChanged(user => {
+            if (user) {
+                this.user = user;
+            }
+        });
+    }
+};
+</script>

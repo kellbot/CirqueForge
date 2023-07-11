@@ -6,11 +6,9 @@ export const useAppStore = defineStore('app', {
     // if (localStorage.getItem("app"))
     //   return JSON.parse(localStorage.getItem("app"));
     return {
-      user : {
+      user: {
         loggedIn: false,
-        registerOpen: false,
-        experiences: [],
-        fullName: "Ned Flanders",
+        data: null
       }
     }
   },

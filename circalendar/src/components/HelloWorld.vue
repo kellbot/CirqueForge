@@ -42,23 +42,8 @@
 
 <script>
 import EventSlider from '@/components/EventSlider.vue'
-import { useAuth0 } from '@auth0/auth0-vue';
 
 export default {
-  setup() {
-    const { loginWithRedirect, logout, user, isAuthenticated } = useAuth0();
-
-    return {
-      login: () => {
-        loginWithRedirect();
-      },
-      logout() {
-        logout()
-      },
-      user,
-      isAuthenticated
-    };
-  },
   components: {
     EventSlider
   }

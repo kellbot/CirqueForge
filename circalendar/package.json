@@ -9,11 +9,12 @@
     "lint": "eslint . --fix --ignore-path .gitignore"
   },
   "dependencies": {
-    "@auth0/auth0-vue": "^2.2.1",
     "@google-cloud/local-auth": "^2.1.0",
     "@mdi/font": "7.0.96",
     "axios": "^1.4.0",
     "core-js": "^3.29.0",
+    "firebase": "^9.23.0",
+    "firebaseui": "^6.0.2",
     "googleapis": "^105.0.0",
     "pinia": "^2.0.0",
     "roboto-fontface": "*",

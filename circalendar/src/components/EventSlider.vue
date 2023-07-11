@@ -1,5 +1,8 @@
 <template>
   <v-sheet class="pa-0 mx-auto" max-width="1100px" color="background">
+    <div v-if="loading" class="text-center">
+      Loading events<br/>
+      <v-progress-circular indeterminate></v-progress-circular></div>
     <v-slide-group multiple show-arrows>
       <v-slide-group-item v-for="n in realEvents" :key="n" v-slot="{ isSelected, toggle, selectedClass }">
 
@@ -38,22 +41,23 @@ const appScriptUrl = 'https://script.google.com/macros/s/AKfycbwOSpw-zlGKEQoA8GU
 
 export default {
   setup() {
-        const { loginWithRedirect, logout, user, isAuthenticated } = useAuth0();
-        return {
-            login: () => {
-                loginWithRedirect();
-            },
-            logout() {
-                logout()
-            },
-            user,
-            isAuthenticated
-        };
-    },
+    const { loginWithRedirect, logout, user, isAuthenticated } = useAuth0();
+    return {
+      login: () => {
+        loginWithRedirect();
+      },
+      logout() {
+        logout()
+      },
+      user,
+      isAuthenticated
+    };
+  },
   data() {
     return {
       myEvents: [],
       realEvents: '',
+      loading: true
     }
   },
   components: {
@@ -61,31 +65,32 @@ export default {
   },
   methods: {
     rsvp(eventId) {
-      const rsvpurl = appScriptUrl + `&add=${encodeURIComponent(this.user.name)}&id=${encodeURIComponent( eventId)}`;
-      console.log(rsvpurl);
+      const rsvpurl = appScriptUrl + `&add=${encodeURIComponent(this.user.name)}&id=${encodeURIComponent(eventId)}`;
+
       fetch(rsvpurl).then(response => response.json());
-  
+
     },
   },
-    created() {
-      fetch(appScriptUrl).then(response => response.json())
-        .then(data => {
-          this.realEvents = data.map(d => {
-            switch (d.summary) {
-              case "Handstand Study Group":
-                d.img = hands;
-                break;
-              case "Low Aerial Study Group":
-                d.img = aerial;
-                break;
-              case "Test":
-                d.img = meeting
-            }
-            return d;
-          });
+  created() {
+    fetch(appScriptUrl).then(response => response.json())
+      .then(data => {
+        this.realEvents = data.map(d => {
+          switch (d.summary) {
+            case "Handstand Study Group":
+              d.img = hands;
+              break;
+            case "Low Aerial Study Group":
+              d.img = aerial;
+              break;
+            case "Test":
+              d.img = meeting
+          }
+          return d;
         });
-    }
-  
+        this.loading = false;
+      });
+  }
+
 }
 
 </script>

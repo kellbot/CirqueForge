@@ -6,7 +6,7 @@
             <div v-if="isHovering"
                 class="d-flex flex-column transition-fast-in-fast-out bg-secondary v-card--reveal text-h2"
                 style="height: 100%;">
-                <v-btn v-if="loggedIn" class="w-75 ma-5 bg-white" @click="rsvp(cardEvent.id)" v-on:click="toggle"><span v-if="isSelected">Cancel</span>
+                <v-btn v-if="loggedIn" class="w-75 ma-5 bg-white" @click="rsvp(cardEvent.id, !isSelected)" v-on:click="toggle"><span v-if="isSelected">Cancel</span>
                     RSVP</v-btn>
                 <v-btn class="w-75">More Info</v-btn>
             </div>

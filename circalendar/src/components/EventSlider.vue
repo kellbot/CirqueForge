@@ -6,31 +6,12 @@
     </div>
     <v-slide-group multiple show-arrows>
       <v-slide-group-item v-for="n in realEvents" :key="n" v-slot="{ isSelected, toggle, selectedClass }">
-
-        <eventCard :logged-in="user ? true : false" :card-event="n" :is-selected="isSelected" :selected-class="selectedClass"
-          :rsvp="doRsvp" :toggle="toggle" />
-
+ 
+        <EventCard :logged-in="activeUser ? true : false" :card-event="n" :is-selected="isSelected || isGoing(n.id, rsvps)"
+          :selected-class="selectedClass" :rsvp="doRsvp" :toggle="toggle" />
       </v-slide-group-item>
     </v-slide-group>
-
   </v-sheet>
-  <v-sheet color="background">
-    <section id="firebaseui-auth-container"></section>
-    <div class="card horizontal" style="max-width:400px;margin:0 auto;" v-if="user">
-      <div class="card-image" style="margin-top:25px;margin-left:10px;"> <img :src="user.photoURL"
-          style="width:75px;height:75px;border-radius:50%;border:4px solid #333" /> </div>
-      <div class="card-stacked">
-        <div class="card-content">
-          <p> name: <strong>{{ user.displayName }}</strong><br />email:<strong>{{ user.email }}</strong><br />uid:
-            <strong>{{ user.uid }}</strong> <br />provider: <strong
-              class="teal-text">{{ user.providerData[0].providerId }}</strong>
-          </p>
-        </div>
-      </div>
-    </div>
-
-  </v-sheet>
-  <div v-if="user">LOGGED IN</div>
 </template>
 <style>
 .v-card--reveal {
@@ -47,85 +28,105 @@
   position: absolute;
 }
 </style>
-<script>
+<script setup>
 import hands from '@/assets/woman-doing-sport-exercises.jpg';
 import aerial from '@/assets/leg-stretching-with-red-linen.jpg';
 import meeting from '@/assets/19198014.jpg';
 import EventCard from '@/components/EventCard.vue';
 import firebase from 'firebase/compat/app';
-import * as firebaseui from 'firebaseui'
 const appScriptUrl = 'https://script.google.com/macros/s/AKfycbwOSpw-zlGKEQoA8GUmohEdmk1hqszaW6qqG3Pei-E6vOGNnZkBAB-rx66NnS9ywoVcoA/exec?run=ok';
 
+import { ref } from 'vue'
 
-export default {
-  setup() {
+import 'firebase/compat/auth';
+import 'firebase/compat/messaging';
+import 'firebase/compat/firestore';
 
-    return {
-      rsvps: [],
-      rsvp: {
-        eventId: ''
-      },
-      user: null,
-    };
-  },
-  data() {
-    return {
-      fetchedEvents: [],
-      realEvents: '',
-      loading: true,
-      isAuthenticated: false
-    }
-  },
+let activeUser = ref(null);
+let realEvents = ref(null);
+const loading = ref(true);
+const isLoggedIn = ref(false);
+const rsvps = ref([]);
 
-  components: {
-    EventCard,
-  },
-  methods: {
-    doRsvp() {
-      return false;
-    },
-    signOut(e) {
-      e.stopPropagation();
-      firebase.auth().signOut();
+function isGoing(id, rsvps) {
+  return (rsvps[id] && rsvps[id].going)
+}
 
-    }
-  },
-  mounted() {
-    let ui = firebaseui.auth.AuthUI.getInstance();
-    if (!ui) {
-      ui = new firebaseui.auth.AuthUI(firebase.auth());
-    }
-    var uiConfig = {
-      signInSuccessUrl: "/",
-      signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID,    firebase.auth.EmailAuthProvider.PROVIDER_ID,]
-    };
-    ui.start("#firebaseui-auth-container", uiConfig);
-  },
-  created() {
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        this.user = user;
-      }
-    });
-    fetch(appScriptUrl).then(response => response.json())
-      .then(data => {
-        this.realEvents = data.map(d => {
-          switch (d.summary) {
-            case "Handstand Study Group":
-              d.img = hands;
-              break;
-            case "Low Aerial Study Group":
-              d.img = aerial;
-              break;
-            case "Test":
-              d.img = meeting
-          }
-          return d;
-        });
-        this.loading = false;
-      });
+function doRsvp(eventId, register) {
+  console.log(register);
+  if (register) {
+    firebase
+      .firestore()
+      .collection("users")
+      .doc(firebase.auth().currentUser.uid)
+      .collection("rsvps")
+      .doc(eventId).set({
+        going: true
+      })
+  } else {
+    console.log(eventId);
+    firebase
+      .firestore()
+      .collection("users")
+      .doc(firebase.auth().currentUser.uid)
+      .collection("rsvps")
+      .doc(eventId)
+      .delete().then(function () { 
+      console.log("Document successfully deleted!"); 
+
+}).catch(
+    function(error) { 
+    console.error("Error removing document: ", error); 
+});
   }
 
 }
+
+firebase.auth().onAuthStateChanged(function (user) {
+  if (user) {
+    isLoggedIn.value = true // if we have a user
+    activeUser = user;
+    getRsvps();
+  } else {
+    isLoggedIn.value = false // if we do not
+  }
+})
+
+
+async function getRsvps() {
+  var rsvpRef = await firebase
+    .firestore()
+    .collection("users")
+    .doc(firebase.auth().currentUser.uid)
+    .collection("rsvps");
+
+  rsvpRef.onSnapshot(snap => {
+    rsvps.value = [];
+    snap.forEach(doc => {
+      
+      rsvps.value[doc.id] = doc.data();
+      
+    });
+  });
+}
+
+fetch(appScriptUrl).then(response => response.json())
+  .then((data) => {
+    realEvents = data.map(d => {
+      switch (d.summary) {
+        case "Handstand Study Group":
+          d.img = hands;
+          break;
+        case "Low Aerial Study Group":
+          d.img = aerial;
+          break;
+        case "Test":
+          d.img = meeting
+      }
+      return d;
+    });
+    loading.value = false;
+  });
+
 
 </script>

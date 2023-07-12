@@ -20,8 +20,8 @@
     <div class="ma-2 pa-2 text-center">
       Our study groups are offered on a "pay what you can" basis with a suggested donation of $5.
       <br />
-      <div class="ma-2" v-if="!isAuthenticated">
-        <v-btn @click="login">REGISTER
+      <div class="ma-2" v-if="!isLoggedIn">
+        <v-btn >REGISTER
         </v-btn> to RSVP
       </div>
     </div>
@@ -40,12 +40,24 @@
       </v-container>
 </template>
 
-<script>
+<script setup>
 import EventSlider from '@/components/EventSlider.vue'
+import { ref } from 'vue'
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
+import 'firebase/compat/messaging';
+import 'firebase/compat/firestore';
 
-export default {
-  components: {
-    EventSlider
+let activeUser = ref(null);
+
+const isLoggedIn = ref(false);
+firebase.auth().onAuthStateChanged(function (user) {
+  if (user) {
+    isLoggedIn.value = true // if we have a user
+    activeUser = user;
+  } else {
+    isLoggedIn.value = false // if we do not
   }
-}
+})
+
 </script>

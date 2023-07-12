@@ -55,12 +55,6 @@ export default {
             this.$router.push({ name: "Login" });
         }
     },
-    created() {
-        firebase.auth().onAuthStateChanged(user => {
-            if (user) {
-                this.user = user;
-            }
-        });
-    }
+   
 };
 </script>

@@ -1,9 +1,9 @@
 <template>
   <v-app-bar flat color="primary">
     <v-app-bar-title>
-      <v-icon icon="mdi-circle-slice-6" />
+      <v-icon icon="mdi-gymnastics" />
 
-      CirquePlexForge
+      Circus Forge
     </v-app-bar-title>
     <v-btn href="">Events</v-btn>
     <v-btn>About Us</v-btn>

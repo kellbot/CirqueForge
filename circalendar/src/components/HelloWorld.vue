@@ -7,13 +7,10 @@
         <h1 class="text-h2 font-weight-bold">Circus Forge</h1>
       </v-col>
       <v-col cols="12" md="7">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-        ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-        aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore
-        eu
-        fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-        mollit
-        anim id est laborum.
+        <p>Circus Forge is a community organization dedicated to making intermediate and advanced circus arts more accessible. We meet
+        in locations around the city of Phildelphia to share skills and connect with community. If you have space and would be willing to host us
+        please <a href="mailto:info@circusforge.org">get in touch</a>!</p>
+        <p>We are in the process of applying for 501c3 nonprofit status.</p>
       </v-col>
     </v-row>
     <v-divider></v-divider>

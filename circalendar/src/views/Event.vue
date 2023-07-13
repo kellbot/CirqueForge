@@ -14,8 +14,9 @@
 
                 </v-card></v-col>
             <v-col class="ml-4">
-                <v-btn size="x-large" class="w-50 mx-auto my-4" @click="doRsvp(currentEvent.id, true)">
-                   <span v-if="going()">Cancel</span>
+                <v-btn v-if="isLoggedIn" size="x-large" class="w-50 mx-auto my-4"
+                    @click="doRsvp(currentEvent.id, !going())">
+                    <span v-if="going()">Cancel</span>
                     RSVP</v-btn>
                 <h2>Related Events</h2>
                 <template v-for="e in getRelatedEvents(currentEvent.recurringEventId)">
@@ -51,7 +52,8 @@
                         <v-card-subtitle>
                             {{ niceDate(event.start.dateTime) }}
                         </v-card-subtitle>
-                        <v-card-actions><v-btn elevation="0" :href="`/events/id/${event.id}`">More Info</v-btn></v-card-actions>
+                        <v-card-actions><v-btn elevation="0" :to="`/events/id/${event.id}`">More
+                                Info</v-btn></v-card-actions>
                     </v-card>
                 </v-timeline-item>
             </template>
@@ -66,7 +68,7 @@ import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/messaging';
 import 'firebase/compat/firestore';
-import { ref, computed } from 'vue'
+import { ref, watch, computed } from 'vue'
 
 import { useAppStore } from '@/store/app';
 import { storeToRefs } from 'pinia';
@@ -104,67 +106,76 @@ function niceDate(time) {
 }
 
 function going() {
-  return (rsvps[route.params.id] && rsvps[route.params.id].going)
+    return (rsvps.value[route.params.id] && rsvps.value[route.params.id].going)
 }
 
 
 async function getRsvps() {
-  var rsvpRef = await firebase
-    .firestore()
-    .collection("users")
-    .doc(firebase.auth().currentUser.uid)
-    .collection("rsvps");
+    var rsvpRef = await firebase
+        .firestore()
+        .collection("users")
+        .doc(firebase.auth().currentUser.uid)
+        .collection("rsvps");
 
-  rsvpRef.onSnapshot(snap => {
-    rsvps.value = [];
-    snap.forEach(doc => {
+    rsvpRef.onSnapshot(snap => {
+        rsvps.value = [];
+        snap.forEach(doc => {
 
-      rsvps.value[doc.id] = doc.data();
+            rsvps.value[doc.id] = doc.data();
 
+        });
     });
-  });
 }
 
 
 function doRsvp(eventId, register) {
-if (!firebase.auth().currentUser.uid) return;
-if (register) {
-  firebase
-    .firestore()
-    .collection("users")
-    .doc(firebase.auth().currentUser.uid)
-    .collection("rsvps")
-    .doc(eventId).set({
-      going: true
-    })
-} else {
-  firebase
-    .firestore()
-    .collection("users")
-    .doc(firebase.auth().currentUser.uid)
-    .collection("rsvps")
-    .doc(eventId)
-    .delete().then(function () {
-      console.log("Document successfully deleted!");
+    if (!firebase.auth().currentUser.uid) return;
+    if (register) {
+        firebase
+            .firestore()
+            .collection("users")
+            .doc(firebase.auth().currentUser.uid)
+            .collection("rsvps")
+            .doc(eventId).set({
+                going: true
+            })
+    } else {
+        firebase
+            .firestore()
+            .collection("users")
+            .doc(firebase.auth().currentUser.uid)
+            .collection("rsvps")
+            .doc(eventId)
+            .delete().then(function () {
+                console.log("Document successfully deleted!");
 
-    }).catch(
-      function (error) {
-        console.error("Error removing document: ", error);
-      });
-}
+            }).catch(
+                function (error) {
+                    console.error("Error removing document: ", error);
+                });
+    }
 
 }
 
 
 firebase.auth().onAuthStateChanged(function (user) {
-  if (user) {
-    isLoggedIn.value = true // if we have a user
-    activeUser = user;
-    getRsvps();
-  } else {
-    isLoggedIn.value = false // if we do not
-  }
+    if (user) {
+        isLoggedIn.value = true // if we have a user
+        activeUser = user;
+        getRsvps();
+    } else {
+        isLoggedIn.value = false // if we do not
+    }
 })
+
+watch(
+    route,
+    (newRoute) => {
+
+        currentEvent.value = getEvents.filter((e) => e.id == newRoute.params.id)[0];
+    }
+);
+
 
 currentEvent.value = getEvents.filter((e) => e.id == route.params.id)[0];
 

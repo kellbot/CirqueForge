@@ -13,12 +13,7 @@
     </v-menu>
 </template>
 <script setup>
-import firebase from 'firebase/compat/app';
-const props = defineProps(['activeName']);
-
-function doLogout() {
-    firebase.auth().signOut();
-}
+const props = defineProps(['activeName', 'doLogout']);
 </script>
 <style>
 .v-menu .v-list.item {

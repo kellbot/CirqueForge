@@ -3,18 +3,18 @@
     <v-app-bar-title>
       <v-icon icon="mdi-gymnastics" />
 
-     <v-btn href="/"> Circus Forge</v-btn>
+     <v-btn to="/"> Circus Forge</v-btn>
     </v-app-bar-title>
-    <v-btn href="/events">Events</v-btn>
+    <v-btn to="/events">Events</v-btn>
     <v-btn>About Us</v-btn>
     <v-spacer></v-spacer>
     <v-divider vertical></v-divider>
 
-    <v-btn v-if="!isLoggedIn" href="/login">
+    <v-btn v-if="!isLoggedIn" to="/login">
       Log In / Register
     </v-btn>
  
-    <profile v-if="isLoggedIn" :active-name="activeUser.displayName"/>
+    <profile v-if="isLoggedIn" :do-logout="doLogout" :active-name="activeUser.displayName"/>
     <v-divider vertical></v-divider>
     <v-btn href="" icon>
       <v-icon>mdi-magnify</v-icon>
@@ -22,8 +22,6 @@
   </v-app-bar>
   <v-system-bar window color="background-darken-1" class="elevation-1">
 
-    CircusForge > Home
-    <v-spacer></v-spacer>
   </v-system-bar>
 </template>
 
@@ -44,6 +42,14 @@ firebase.auth().onAuthStateChanged(function (user) {
     isLoggedIn.value = false // if we do not
   }
 })
+
+function doLogout() {
+  try {
+    firebase.auth().signOut();
+  } catch (e) {
+    console.log('Error: duplicate logout')
+  }
+}
 
 
 

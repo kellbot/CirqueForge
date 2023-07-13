@@ -39,26 +39,27 @@
             <v-col class="text-h2">Upcoming Events</v-col>
         </v-row>
 
-        <v-timeline>
-            <template v-for="month in displayedMonths">
-                <v-timeline-item>
-                    <h2>{{ monthNameFromNumber(month) }}</h2>
-                </v-timeline-item>
-                <v-timeline-item v-for="event in getEventsByMonth(month)" dot-color="purple-lighten-2" fill-dot>
-                    <v-card>
-                        <v-card-title>
-                            {{ event.summary }}
-                        </v-card-title>
-                        <v-card-subtitle>
-                            {{ niceDate(event.start.dateTime) }}
-                        </v-card-subtitle>
-                        <v-card-actions><v-btn elevation="0" :to="`/events/id/${event.id}`">More
-                                Info</v-btn></v-card-actions>
-                    </v-card>
-                </v-timeline-item>
-            </template>
-
-        </v-timeline>
+        <template v-for="month in displayedMonths">
+            <v-row>
+                <h2>{{ monthNameFromNumber(month) }}</h2>
+            </v-row>
+            <v-row class="d-flex">
+                <v-card class="ma-2 d-flex flex-no-wrap justify-space-between" v-for="event in getEventsByMonth(month)">
+                    <v-avatar  class="ma-0"
+                size="125"
+                rounded="0"><v-img cover :src="event.img"></v-img></v-avatar>
+                    <div><v-card-title>
+                        {{ event.summary }}
+                    </v-card-title>
+                    <v-card-subtitle>
+                        {{ niceDate(event.start.dateTime) }}
+                    </v-card-subtitle>
+                    <v-card-actions><v-btn elevation="0" :to="`/events/id/${event.id}`">More
+                            Info</v-btn></v-card-actions>
+                            </div>
+                </v-card>
+            </v-row>
+        </template>
     </v-container>
 </template>
 <script setup>

@@ -8,7 +8,8 @@
 import App from './App.vue'
 
 // Composables
-import { createApp } from 'vue'
+import { createApp, watch } from 'vue'
+import pinia from './store'
 
 
 // Plugins
@@ -23,7 +24,7 @@ import 'firebase/compat/firestore';
 
 const firebaseConfig = {
   apiKey: "AIzaSyAgrUB1D6qh-AcSZCgeS5hXToetWc_eS98",
-  authDomain: "public-calendar-sync.firebaseapp.com",
+  authDomain:  "auth.circusforge.org",
   projectId: "public-calendar-sync",
   storageBucket: "public-calendar-sync.appspot.com",
   messagingSenderId: "316754049831",
@@ -42,4 +43,13 @@ const app = createApp(App)
 registerPlugins(app)
 
 app.mount('#app')
+
+
+watch(
+  pinia.state,
+  (state) => {
+    localStorage.setItem("cal", JSON.stringify(state.cal));
+  },
+  { deep: true }
+  );
 

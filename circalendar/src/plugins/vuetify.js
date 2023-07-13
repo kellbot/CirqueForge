@@ -25,7 +25,8 @@ const myCustomLightTheme = {
     success: colors.lightGreen.base,
     background: "#666666",
     cardBackground: '#f6f6f6'
-    }
+    },
+    light : { anchor: colors.cyan.lighten3 }
   
 }
 

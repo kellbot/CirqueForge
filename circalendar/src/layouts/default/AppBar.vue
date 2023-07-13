@@ -3,7 +3,7 @@
     <v-app-bar-title>
       <v-icon icon="mdi-gymnastics" />
 
-      Circus Forge
+     <v-btn href="/"> Circus Forge</v-btn>
     </v-app-bar-title>
     <v-btn href="">Events</v-btn>
     <v-btn>About Us</v-btn>
@@ -31,7 +31,7 @@
 
 import firebase from 'firebase/compat/app';
 import profile from '@/components/profile.vue';
-import { ref, reactive } from 'vue';
+import { ref } from 'vue';
 
 let activeUser = ref(null);
 

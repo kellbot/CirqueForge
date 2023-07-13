@@ -27,9 +27,9 @@ const routes = [
         component: () => import('@/views/Event.vue')
       },  
       {
-        path: 'add',
-        name: 'add-event',
-        component: () => import('@/components/CreateEvent.vue')
+        path: 'id/:id',
+        name: 'event-id',
+        component: () => import('@/views/Event.vue')
       },
     ]
   },

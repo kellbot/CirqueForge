@@ -1,6 +1,7 @@
 <template>
+
+<v-container ><p class="mx-auto w-50" >Sign in with an existing Google account or using an email address. </p></v-container>
     <section>
-        <h5 class="center-align">Login</h5>
         <section id="firebaseui-auth-container"></section>
     </section>
 </template>
@@ -27,11 +28,10 @@ export default {
             ui = new firebaseui.auth.AuthUI(firebase.auth());
         }
         var uiConfig = {
-            signInSuccessUrl: "/profile", // This redirect can be achived by route using callback.
+            signInSuccessUrl: "/", // This redirect can be achived by route using callback.
             signInFlow: "popup",
 
             signInOptions: [
-                firebase.auth.FacebookAuthProvider.PROVIDER_ID,
                 firebase.auth.GoogleAuthProvider.PROVIDER_ID,
                 firebase.auth.EmailAuthProvider.PROVIDER_ID
             ]

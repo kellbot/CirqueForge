@@ -18,7 +18,7 @@
       Our study groups are offered on a "pay what you can" basis with a suggested donation of $5.
       <br />
       <div class="ma-2" v-if="!isLoggedIn">
-        <v-btn >REGISTER
+        <v-btn href="/login">REGISTER
         </v-btn> to RSVP
       </div>
     </div>

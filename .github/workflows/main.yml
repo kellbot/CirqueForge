@@ -41,6 +41,9 @@ jobs:
       - name: Build
         run: npm run build
         working-directory: circalendar
+      - name: Copy 404
+        run: cp index.html 404.html
+        working-directory: circalendar/dist
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Upload artifact

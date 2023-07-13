@@ -6,7 +6,7 @@ import meeting from '@/assets/19198014.jpg';
 
 export const useAppStore = defineStore('cal', {
   state: () => {
-    if (localStorage.getItem("cal"))
+    if (localStorage.getItem("cal")) 
       return JSON.parse(localStorage.getItem("cal"));
     console.log('no data found');
     return {
@@ -30,7 +30,15 @@ export const useAppStore = defineStore('cal', {
   },
   actions:
 {
+    reset() {
+      this.calendar = {calendar: {
+        data: [],
+        loading: false,
+        lastUpdated: new Date(0)
+      }}
+    },
     async getCalendar() {
+      localStorage.removeItem('cal');
       this.calendar.loading = true;
       console.log('Fetching calendar data');
       // TODO: Deduplicate this
@@ -52,6 +60,7 @@ export const useAppStore = defineStore('cal', {
             return d;
           });
           this.calendar.loading = false;
+          this.calendar.lastUpdated = new Date();
         });
             }
 }

@@ -5,7 +5,7 @@
 
      <v-btn href="/"> Circus Forge</v-btn>
     </v-app-bar-title>
-    <v-btn href="">Events</v-btn>
+    <v-btn href="/events">Events</v-btn>
     <v-btn>About Us</v-btn>
     <v-spacer></v-spacer>
     <v-divider vertical></v-divider>

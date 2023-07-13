@@ -33,15 +33,17 @@
 
 import EventCard from '@/components/EventCard.vue';
 import firebase from 'firebase/compat/app';
-
-import { ref  } from 'vue'
-import { useAppStore } from '@/store/app';
-
-const {getEvents, calendar} = useAppStore();
-
 import 'firebase/compat/auth';
 import 'firebase/compat/messaging';
 import 'firebase/compat/firestore';
+import { ref  } from 'vue'
+import { useAppStore } from '@/store/app';
+import { storeToRefs } from 'pinia';
+
+const {getEvents} = useAppStore();
+const { calendar } = storeToRefs(useAppStore());
+
+
 
 let activeUser = ref(null);
 let realEvents = getEvents;

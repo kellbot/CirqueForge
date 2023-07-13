@@ -1,6 +1,6 @@
 <template>
   <v-sheet class="pa-0 mx-auto" max-width="1100px" color="background">
-    <div v-if="loading" class="text-center">
+    <div v-if="calendar.loading" class="text-center">
       Loading events<br />
       <v-progress-circular indeterminate></v-progress-circular>
     </div>
@@ -36,20 +36,18 @@ import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/messaging';
 import 'firebase/compat/firestore';
-import { ref  } from 'vue'
+import { ref, reactive } from 'vue'
 import { useAppStore } from '@/store/app';
 import { storeToRefs } from 'pinia';
 
-const {getEvents} = useAppStore();
-const { calendar } = storeToRefs(useAppStore());
+const {getEvents, calendar} = storeToRefs(useAppStore());
 
 
 
 let activeUser = ref(null);
-let realEvents = getEvents;
+let realEvents = ref(getEvents);
 const isLoggedIn = ref(false);
 let rsvps = ref([]);
-const loading = calendar.loading;
 
 
 function isGoing(id, rsvps) {

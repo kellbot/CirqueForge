@@ -6,7 +6,7 @@ import meeting from '@/assets/19198014.jpg';
 
 export const useAppStore = defineStore('cal', {
   state: () => {
-    if (localStorage.getItem("cal")) 
+    if (localStorage.getItem("cal"))
       return JSON.parse(localStorage.getItem("cal"));
     console.log('no data found');
     return {
@@ -25,23 +25,25 @@ export const useAppStore = defineStore('cal', {
       return (recurrenceId) => state.calendar.data.filter(event => event.recurringEventId == recurrenceId);
     },
     getEventsByMonth: (state) => {
-      return (month) => state.calendar.data.filter(event=> new Date(event.start.dateTime).getMonth() == month);
+      return (month) => state.calendar.data.filter(event => new Date(event.start.dateTime).getMonth() == month);
     }
   },
   actions:
-{
+  {
     reset() {
-      this.calendar = {calendar: {
-        data: [],
-        loading: false,
-        lastUpdated: new Date(0)
-      }}
+      this.calendar = {
+        calendar: {
+          data: [],
+          loading: true,
+          lastUpdated: new Date(0)
+        }
+      }
     },
     async getCalendar() {
       localStorage.removeItem('cal');
       this.calendar.loading = true;
       console.log('Fetching calendar data');
-      // TODO: Deduplicate this
+
       const appScriptUrl = 'https://script.google.com/macros/s/AKfycbwOSpw-zlGKEQoA8GUmohEdmk1hqszaW6qqG3Pei-E6vOGNnZkBAB-rx66NnS9ywoVcoA/exec?run=ok';
 
       fetch(appScriptUrl).then(response => response.json())
@@ -61,9 +63,11 @@ export const useAppStore = defineStore('cal', {
           });
           this.calendar.loading = false;
           this.calendar.lastUpdated = new Date();
+
+          
         });
-            }
-}
+    }
+  }
 });
 
 

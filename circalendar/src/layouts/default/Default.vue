@@ -5,7 +5,14 @@
     <default-view />
   </v-app>
 </template>
-
+<style>
+a {
+  color: white
+}
+ .v-card-text a {
+    color: rgb(var(--v-theme-secondary))
+ }
+</style>
 <script setup>
 import store from '@/store';
 import DefaultBar from './AppBar.vue'

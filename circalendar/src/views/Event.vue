@@ -10,7 +10,7 @@
                     <v-card-subtitle>{{ new Date(currentEvent.start.dateTime).format('l, F j g:i a') }}</v-card-subtitle>
 
                     <v-card-subtitle><v-icon icon="mdi-map-marker"></v-icon>{{ currentEvent.location }}</v-card-subtitle>
-                    <v-card-text>{{ currentEvent.description }}</v-card-text>
+                    <v-card-text v-html="currentEvent.description"></v-card-text>
 
                 </v-card></v-col>
             <v-col class="ml-4">

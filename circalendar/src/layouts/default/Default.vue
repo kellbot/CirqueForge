@@ -12,6 +12,9 @@ a {
  .v-card-text a {
     color: rgb(var(--v-theme-secondary))
  }
+ .pointer {
+  cursor: pointer;
+ }
 </style>
 <script setup>
 import store from '@/store';

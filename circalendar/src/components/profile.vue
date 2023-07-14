@@ -7,7 +7,7 @@
         </template>
         <v-list>
             <v-list-item key="logout" >
-                <v-list-item-title @click.prevent="doLogout">Logout</v-list-item-title>
+                <v-list-item-title class="pointer" @click.prevent="doLogout">Logout</v-list-item-title>
             </v-list-item>
         </v-list>
     </v-menu>

@@ -7,7 +7,7 @@
     <v-slide-group multiple show-arrows>
       <v-slide-group-item v-for="n in realEvents" :key="n" v-slot="{ isSelected, toggle, selectedClass }">
 
-        <EventCard :logged-in="activeUser ? true : false" :card-event="n"
+        <EventCard :logged-in="isLoggedIn" :card-event="n"
           :is-selected="isSelected || isGoing(n.id, rsvps)" :selected-class="selectedClass" :rsvp="doRsvp"
           :toggle="toggle" />
       </v-slide-group-item>
@@ -90,6 +90,7 @@ firebase.auth().onAuthStateChanged(function (user) {
     getRsvps();
   } else {
     isLoggedIn.value = false // if we do not
+    rsvps.value = [];
   }
 })
 

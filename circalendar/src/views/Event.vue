@@ -18,11 +18,13 @@
                     @click="doRsvp(currentEvent.id, !going())">
                     <span v-if="going()">Cancel</span>
                     RSVP</v-btn>
-                <h2>Related Events</h2>
+                <h2>Additional Dates:</h2>
                 <template v-for="e in getRelatedEvents(currentEvent.recurringEventId)">
                     <v-card class="d-flex mb-2 pa-2"><v-sheet class="d-flex align-center text-black">{{
                         niceDate(e.start.dateTime) }}</v-sheet>
-                        <v-btn color="primary" class="ml-auto">RSVP</v-btn></v-card>
+                        <v-btn v-if="isLoggedIn" color="primary" class="ml-auto">RSVP</v-btn>
+                        <div class="ml-auto mr-2" v-else>Sign in or register to RSVP</div>
+                    </v-card>
                 </template>
             </v-col>
         </v-row>

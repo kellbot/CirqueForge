@@ -49,7 +49,8 @@ jobs:
           envkey_VITE_FIREBASE_APP_ID: ${{vars.VITE_FIREBASE_APP_ID}},
           envkey_VITE_VAR: ${{ vars.VITE_TESTKEY}},
           envkey_VITE_ENV: ${{ env.VITE_TESTKEY}},
-          envkey_VITE_SCT: ${{ secrets.VITE_TESTKEY}}
+          envkey_VITE_SCT: ${{ secrets.VITE_TESTKEY}},
+          envkey_VITE_TEST: "Test string"
       - name: Build
         run: npm run build
         working-directory: circalendar

@@ -7,7 +7,7 @@ console.log(import.meta.env.MODE)
 console.log(import.meta.env.VITE_VAR)
 console.log(import.meta.env.VITE_ENV)
 console.log(import.meta.env.VITE_SCT)
-
+console.log(import.meta.env.VITE_TEST)
 
 
 // Components

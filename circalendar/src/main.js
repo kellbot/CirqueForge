@@ -3,6 +3,9 @@
  *
  * Bootstraps Vuetify and other plugins then mounts the App`
  */
+console.log(import.meta.env.MODE);
+
+console.log(import.meta.env.VITE_APP_TITLE);
 
 // Components
 import App from './App.vue'

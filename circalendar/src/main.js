@@ -3,9 +3,7 @@
  *
  * Bootstraps Vuetify and other plugins then mounts the App`
  */
-console.log(import.meta.env.MODE);
-
-console.log(import.meta.env.VITE_APP_TITLE);
+console.log(import.meta.env.MODE)
 
 // Components
 import App from './App.vue'
@@ -26,13 +24,12 @@ import 'firebase/compat/messaging';
 import 'firebase/compat/firestore';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAgrUB1D6qh-AcSZCgeS5hXToetWc_eS98",
-  authDomain:  "auth.circusforge.org",
-  projectId: "public-calendar-sync",
-  storageBucket: "public-calendar-sync.appspot.com",
-  messagingSenderId: "316754049831",
-  appId: "1:316754049831:web:efb98205e9b16d10950702",
-  measurementId: "G-8K4ZWCFW40"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID
 };
 
 // Initialize Firebase

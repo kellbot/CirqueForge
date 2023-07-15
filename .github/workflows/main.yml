@@ -46,7 +46,10 @@ jobs:
           envkey_VITE_FIREBASE_PROJECT_ID: ${{vars.VITE_FIREBASE_PROJECT_ID}},
           envkey_VITE_STORAGE_BUCKET: ${{ vars.VITE_STORAGE_BUCKET}},
           envkey_VITE_FIREBASE_SENDER_ID: ${{vars.VITE_FIREBASE_SENDER_ID}},
-          envkey_VITE_FIREBASE_APP_ID: ${{vars.VITE_FIREBASE_APP_ID}}
+          envkey_VITE_FIREBASE_APP_ID: ${{vars.VITE_FIREBASE_APP_ID}},
+          envkey_VITE_VAR: ${{ vars.VITE_TESTKEY}},
+          envkey_VITE_ENV: ${{ env.VITE_TESTKEY}},
+          envkey_VITE_SCT: ${{ secrets.VITE_TESTKEY}}
       - name: Build
         run: npm run build
         working-directory: circalendar

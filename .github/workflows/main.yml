@@ -38,6 +38,10 @@ jobs:
       - name: Install dependencies
         run: npm install
         working-directory: circalendar
+      - name: Create .env file
+        uses: SpicyPizza/create-envfile@v2.0.2
+        with:
+          envkey_VITE_APP_TITLE: ${{ secrets.VITE_APP_TITLE }}
       - name: Build
         run: npm run build
         working-directory: circalendar

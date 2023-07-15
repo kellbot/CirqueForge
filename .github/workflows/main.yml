@@ -51,6 +51,7 @@ jobs:
           envkey_VITE_ENV: ${{ env.VITE_TESTKEY}},
           envkey_VITE_SCT: ${{ secrets.VITE_TESTKEY}},
           envkey_VITE_TEST: "Test string"
+          directory: "circalendar"
       - name: Build
         run: npm run build
         working-directory: circalendar

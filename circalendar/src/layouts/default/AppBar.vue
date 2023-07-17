@@ -6,7 +6,7 @@
      <v-btn to="/"> Circus Forge</v-btn>
     </v-app-bar-title>
     <v-btn to="/events">Events</v-btn>
-    <v-btn>About Us</v-btn>
+    <v-btn to="/about">About Us</v-btn>
     <v-spacer></v-spacer>
     <v-divider vertical></v-divider>
 
@@ -37,7 +37,7 @@ const isLoggedIn = ref(false);
 firebase.auth().onAuthStateChanged(function (user) {
   if (user) {
     isLoggedIn.value = true // if we have a user
-    activeUser = user;
+    activeUser.value = user;
   } else {
     isLoggedIn.value = false // if we do not
   }

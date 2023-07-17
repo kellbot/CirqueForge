@@ -55,18 +55,19 @@ const routes = [
         name: 'Profile',
         component: () => import('@/views/Person.vue')
       },
-      {
-        path: 'add',
-        name: 'add',
-        component: () => import('@/components/CreatePerson.vue')
-      },
-      {
-        path: 'edit/:id',
-        name: 'edit',
-        component: () => import('@/components/EditPerson.vue')
-      }
     ]
   },
+  {
+    path: '/about',
+    component: () => import('@/layouts/default/Default.vue'),
+    children: [
+      {
+        path: '',
+        name: 'about',
+        component: () => import('@/views/About.vue')
+      }
+    ]
+  }
 ]
 
 const router = createRouter({

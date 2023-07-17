@@ -29,19 +29,10 @@
 
 import firebase from 'firebase/compat/app';
 import profile from '@/components/profile.vue';
-import { ref } from 'vue';
-
-let activeUser = ref(null);
-
-const isLoggedIn = ref(false);
-firebase.auth().onAuthStateChanged(function (user) {
-  if (user) {
-    isLoggedIn.value = true // if we have a user
-    activeUser = user;
-  } else {
-    isLoggedIn.value = false // if we do not
-  }
-})
+import { getCurrentInstance } from 'vue';
+const vm = getCurrentInstance().appContext.config.globalProperties;
+const  isLoggedIn = vm.$isLoggedIn;
+const activeUser = vm.$activeUser;
 
 function doLogout() {
   try {

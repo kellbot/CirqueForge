@@ -83,7 +83,6 @@ const isLoggedIn = ref(false);
 const route = useRoute()
 const currentEvent = ref(null);
 const rsvps = ref([]);
-let activeUser = ref(null);
 
 const displayedMonths = computed(() => {
     let thisMonth = new Date().getMonth();

@@ -11,7 +11,7 @@ console.log(import.meta.env.MODE)
 import App from './App.vue'
 
 // Composables
-import { createApp, watch } from 'vue'
+import { createApp, watch, ref } from 'vue'
 import pinia from './store'
 
 
@@ -46,6 +46,18 @@ registerPlugins(app)
 
 app.mount('#app')
 
+app.config.globalProperties.$isLoggedIn = ref(false);
+app.config.globalProperties.$activeUser = ref(null);
+
+
+firebase.auth().onAuthStateChanged(function (user) {
+  if (user) {
+    app.config.globalProperties.$isLoggedIn.value = true // if we have a user
+    app.config.globalProperties.$activeUser.value = user;
+  } else {
+    app.config.globalProperties.$isLoggedIn.value = false // if we do not
+  }
+})
 
 watch(
   pinia.state,

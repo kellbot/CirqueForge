@@ -18,6 +18,13 @@ export const useAppStore = defineStore('cal', {
     }
   },
   getters: {
+    getEvent: (state) => {
+      return (eventId) => {
+        const events = state.calendar.data.filter(event => event.id == eventId)
+        if (events.length) return events[0]
+        return []
+      }
+    },
     getEvents: (state) => {
       return state.calendar.data;
     },

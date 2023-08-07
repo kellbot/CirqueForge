@@ -15,6 +15,16 @@
     </v-row>
     <v-divider></v-divider>
     <div class="ma-2 pa-2 text-center">
+      <h3>Community Circus Open Mic</h3>
+      <p>October 14, 2pm. Exact location TBD, but somewhere in Northwest Philly!</p>
+      <p>This event is a chance to connect as a community and perform for each other. This outdoor performance will be free and open to the public. </p>
+      <p><strong>Call for performers</strong>:<br />
+        Interested in performing at our circus open mic? <a href="https://forms.gle/oiYLTWrWj8Drb6Gv8">Sign up here</a>! We welcome performers of all
+        disciplines and skill levels, including (but not limited to) aerialists, jugglers, unicyclists, clowns, acrobats, and more. </p>
+    </div>
+
+    <v-divider></v-divider>
+    <div class="ma-2 pa-2 text-center">
       Our study groups are offered on a "pay what you can" basis with a suggested donation of $5.
       <br />
       <div class="ma-2" v-if="!isLoggedIn">
